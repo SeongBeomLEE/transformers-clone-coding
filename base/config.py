@@ -39,27 +39,6 @@ class Config:
         return json.loads(text)
     
     def save_pretrained(self, save_directory: str):
-        """
-        Save a configuration object to the directory `save_directory`, so that it can be re-loaded using the
-        [`~PretrainedConfig.from_pretrained`] class method.
-
-        Args:
-            save_directory (`str` or `os.PathLike`):
-                Directory where the configuration JSON file will be saved (will be created if it does not exist).
-            push_to_hub (`bool`, *optional*, defaults to `False`):
-                Whether or not to push your model to the Hugging Face model hub after saving it.
-
-                <Tip warning={true}>
-
-                Using `push_to_hub=True` will synchronize the repository you are pushing to with `save_directory`,
-                which requires `save_directory` to be a local clone of the repo you are pushing to if it's an existing
-                folder. Pass along `temp_dir=True` to use a temporary directory instead.
-
-                </Tip>
-
-            kwargs:
-                Additional key word arguments passed along to the [`~utils.PushToHubMixin.push_to_hub`] method.
-        """
         if os.path.isfile(save_directory):
             raise AssertionError(f"Provided path ({save_directory}) should be a directory, not a file")
         os.makedirs(save_directory, exist_ok=True)
@@ -67,16 +46,6 @@ class Config:
         self.to_json_file(output_config_file)
     
     def to_json_file(self, json_file_path:str):
-        """
-        Save this instance to a JSON file.
-
-        Args:
-            json_file_path (`str` or `os.PathLike`):
-                Path to the JSON file in which this configuration instance's parameters will be saved.
-            use_diff (`bool`, *optional*, defaults to `True`):
-                If set to `True`, only the difference between the config instance and the default `PretrainedConfig()`
-                is serialized to JSON file.
-        """
         with open(json_file_path, "w", encoding="utf-8") as writer:
             writer.write(self.to_json_string())
     

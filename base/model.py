@@ -2,7 +2,7 @@ import os
 import torch
 import torch.nn as nn
 from .config import Config
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Optional
 
 WEIGHTS_NAME = "pytorch_model.bin"
 CONFIG_NAME = "config.json"
@@ -11,12 +11,7 @@ class BaseModel(nn.Module):
     def __init__(self, config: Config, *inputs, **kwargs):
         super().__init__()
         if not isinstance(config, Config):
-            raise ValueError(
-                f"Parameter config in `{self.__class__.__name__}(config)` should be an instance of class "
-                "`Config`. To create a model from a pretrained model use "
-                f"`model = {self.__class__.__name__}.from_pretrained(PRETRAINED_MODEL_NAME)`"
-            )
-        # Save config and origin of the pretrained weights if given in model
+            raise ValueError(f"Parameter config in `{self.__class__.__name__}(config)` should be an instance of class")
         self.config = config
     
     @classmethod
